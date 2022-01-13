@@ -1,16 +1,16 @@
 // https://www.codeproject.com/Articles/1275479/State-Machine-Design-in-C
 //
-// The StateMachine module is a C language implementation of a finite state 
+// The StateMachine module is a C language implementation of a finite state
 // machine (FSM).
 //
-// All event data must be created dynamically using SM_XAlloc. Use a fixed 
-// block allocator or the heap as desired. 
+// All event data must be created dynamically using SM_XAlloc. Use a fixed
+// block allocator or the heap as desired.
 //
-// The standard version (non-EX) supports state and event functions. The 
+// The standard version (non-EX) supports state and event functions. The
 // extended version (EX) supports the additional guard, entry and exit state
-// machine features. 
+// machine features.
 //
-// Macros are used to assist in creating the state machine machinery. 
+// Macros are used to assist in creating the state machine machinery.
 
 #ifndef _STATE_MACHINE_H
 #define _STATE_MACHINE_H
@@ -48,7 +48,7 @@ typedef struct
 } SM_StateMachineConst;
 
 // State machine instance data
-typedef struct 
+typedef struct
 {
     const CHAR* name;
     void* pInstance;
@@ -96,11 +96,11 @@ void _SM_StateEngine(SM_StateMachine* self, const SM_StateMachineConst* selfCons
 void _SM_StateEngineEx(SM_StateMachine* self, const SM_StateMachineConst* selfConst);
 
 #define SM_DECLARE(_smName_) \
-    extern SM_StateMachine _smName_##Obj; 
+    extern SM_StateMachine _smName_##Obj;
 
 #define SM_DEFINE(_smName_, _instance_) \
     SM_StateMachine _smName_##Obj = { #_smName_, _instance_, \
-        0, 0, 0, 0 }; 
+        0, 0, 0, 0 };
 
 #define EVENT_DECLARE(_eventFunc_, _eventData_) \
     void _eventFunc_(SM_StateMachine* self, _eventData_* pEventData);
@@ -139,7 +139,7 @@ void _SM_StateEngineEx(SM_StateMachine* self, const SM_StateMachineConst* selfCo
     static void EX_##_exitFunc_(SM_StateMachine* self)
 
 #define BEGIN_STATE_MAP(_smName_) \
-    static const SM_StateStruct _smName_##StateMap[] = { 
+    static const SM_StateStruct _smName_##StateMap[] = {
 
 #define STATE_MAP_ENTRY(_stateFunc_) \
     { (SM_StateFunc)_stateFunc_ },
@@ -151,7 +151,7 @@ void _SM_StateEngineEx(SM_StateMachine* self, const SM_StateMachineConst* selfCo
         _smName_##StateMap, NULL };
 
 #define BEGIN_STATE_MAP_EX(_smName_) \
-    static const SM_StateStructEx _smName_##StateMap[] = { 
+    static const SM_StateStructEx _smName_##StateMap[] = {
 
 #define STATE_MAP_ENTRY_EX(_stateFunc_) \
     { (SM_StateFunc)_stateFunc_, NULL, NULL, NULL },
@@ -179,5 +179,5 @@ void _SM_StateEngineEx(SM_StateMachine* self, const SM_StateMachineConst* selfCo
 #ifdef __cplusplus
 }
 #endif
- 
+
 #endif // _STATE_MACHINE_H
