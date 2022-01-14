@@ -14,9 +14,9 @@
     static LOCK_HANDLE _hLock;
 
     #define LK_CREATE()     (1)
-    #define LK_DESTROY(h)  
-    #define LK_LOCK(h)    
-    #define LK_UNLOCK(h)  
+    #define LK_DESTROY(h)
+    #define LK_LOCK(h)
+    #define LK_UNLOCK(h)
 #endif
 
 // Get a pointer to the client's area within a memory block
@@ -56,7 +56,7 @@ static void* ALLOC_NewBlock(ALLOC_Allocator* self)
     }
 
     return pBlock;
-} 
+}
 
 //----------------------------------------------------------------------------
 // ALLOC_Push
@@ -77,7 +77,7 @@ static void ALLOC_Push(ALLOC_Allocator* self, void* pBlock)
     // The client block is now the new head
     self->pHead = pClient;
 
-    LK_UNLOCK(_hLock); 
+    LK_UNLOCK(_hLock);
 }
 
 //----------------------------------------------------------------------------
@@ -99,9 +99,9 @@ static void* ALLOC_Pop(ALLOC_Allocator* self)
         self->pHead = self->pHead->pNext;
     }
 
-    LK_UNLOCK(_hLock); 
+    LK_UNLOCK(_hLock);
     return GET_BLOCK_PTR(pBlock);
-} 
+}
 
 //----------------------------------------------------------------------------
 // ALLOC_Init
@@ -109,7 +109,7 @@ static void* ALLOC_Pop(ALLOC_Allocator* self)
 void ALLOC_Init()
 {
     _hLock = LK_CREATE();
-} 
+}
 
 //----------------------------------------------------------------------------
 // ALLOC_Term
@@ -132,7 +132,7 @@ void* ALLOC_Alloc(ALLOC_HANDLE hAlloc, size_t size)
     // Convert handle to an ALLOC_Allocator instance
     self = (ALLOC_Allocator*)hAlloc;
 
-    // Ensure requested size fits within memory block 
+    // Ensure requested size fits within memory block
     ASSERT_TRUE(size <= self->blockSize);
 
     // Get a block from the free-list
@@ -157,7 +157,7 @@ void* ALLOC_Alloc(ALLOC_HANDLE hAlloc, size_t size)
     }
 
     return GET_CLIENT_PTR(pBlock);
-} 
+}
 
 //----------------------------------------------------------------------------
 // ALLOC_Calloc
@@ -177,7 +177,7 @@ void* ALLOC_Calloc(ALLOC_HANDLE hAlloc, size_t num, size_t size)
 
     if (pMem != NULL)
     {
-        // Initialize memory to 0 per calloc behavior 
+        // Initialize memory to 0 per calloc behavior
         memset(pMem, 0, n);
     }
 
@@ -208,7 +208,7 @@ void ALLOC_Free(ALLOC_HANDLE hAlloc, void* pBlock)
     // Keep track of usage statistics
     self->deallocations++;
     self->blocksInUse--;
-} 
+}
 
 
 
