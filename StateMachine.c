@@ -1,22 +1,22 @@
-#include "Fault.h"
+#include "c_sm_fault.h"
 #include "StateMachine.h"
 
-// Generates an external event. Called once per external event 
+// Generates an external event. Called once per external event
 // to start the state machine executing
 void _SM_ExternalEvent(SM_StateMachine* self, const SM_StateMachineConst* selfConst, BYTE newState, void* pEventData)
 {
     // If we are supposed to ignore this event
-    if (newState == EVENT_IGNORED) 
+    if (newState == EVENT_IGNORED)
     {
         // Just delete the event data, if any
         if (pEventData)
             SM_XFree(pEventData);
     }
-    else 
+    else
     {
         // TODO - capture software lock here for thread-safety if necessary
 
-        // Generate the event 
+        // Generate the event
         _SM_InternalEvent(self, newState, pEventData);
 
         // Execute state machine based on type of state map defined
@@ -25,11 +25,11 @@ void _SM_ExternalEvent(SM_StateMachine* self, const SM_StateMachineConst* selfCo
         else
             _SM_StateEngineEx(self, selfConst);
 
-        // TODO - release software lock here 
+        // TODO - release software lock here
     }
 }
 
-// Generates an internal event. Called from within a state 
+// Generates an internal event. Called from within a state
 // function to transition to a new state
 void _SM_InternalEvent(SM_StateMachine* self, BYTE newState, void* pEventData)
 {
@@ -130,7 +130,7 @@ void _SM_StateEngineEx(SM_StateMachine* self, const SM_StateMachineConst* selfCo
                 if (entry != NULL)
                     entry(self, pDataTemp);
 
-                // Ensure exit/entry actions didn't call SM_InternalEvent by accident 
+                // Ensure exit/entry actions didn't call SM_InternalEvent by accident
                 ASSERT_TRUE(self->eventGenerated == FALSE);
             }
 

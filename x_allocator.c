@@ -1,7 +1,7 @@
 #include "x_allocator.h"
 #include "fb_allocator.h"
 #include "DataTypes.h"
-#include "Fault.h"
+#include "c_sm_fault.h"
 #include <string.h>
 
 static void* XALLOC_PutAllocatorPtrInBlock(void* block, ALLOC_Allocator* allocator);
@@ -21,7 +21,7 @@ static void* XALLOC_PutAllocatorPtrInBlock(void* block, ALLOC_Allocator* allocat
     // Cast raw block memory to ALLOC_Allocator**
     pAllocatorInBlock = (ALLOC_Allocator**)(block);
 
-    // Store the allocator pointer in the memory block 
+    // Store the allocator pointer in the memory block
     *pAllocatorInBlock = allocator;
 
     // Advance the pointer past the ALLOC_Allocator* and return a
@@ -57,7 +57,7 @@ static void* XALLOC_GetBlockPtr(void* block)
 
     ASSERT_TRUE(block);
 
-    // Cast the client memory to ALLOC_Allocator* 
+    // Cast the client memory to ALLOC_Allocator*
     pAllocatorInBlock = (ALLOC_Allocator**)(block);
 
     // Back up one ALLOC_Allocator* position and return raw memory block pointer
@@ -74,11 +74,11 @@ static ALLOC_Allocator* XALLOC_GetAllocator(XAllocData* self, size_t size)
 
     ASSERT_TRUE(self);
 
-    // Each block stores additional meta data (i.e. an ALLOC_Allocator pointer). 
+    // Each block stores additional meta data (i.e. an ALLOC_Allocator pointer).
     // Add overhead for the additional memory required.
     size += XALLOC_BLOCK_META_DATA_SIZE;
 
-    // Iterate over all allocators 
+    // Iterate over all allocators
     for (i=0; i<self->maxAllocators; i++)
     {
         // Can the allocator instance handle the requested size?
@@ -91,7 +91,7 @@ static ALLOC_Allocator* XALLOC_GetAllocator(XAllocData* self, size_t size)
     }
 
     return pAllocator;
-} 
+}
 
 //----------------------------------------------------------------------------
 // XALLOC_Alloc
@@ -125,7 +125,7 @@ void* XALLOC_Alloc(XAllocData* self, size_t size)
     }
 
     return pClientMemory;
-} 
+}
 
 //----------------------------------------------------------------------------
 // XALLOC_Free
@@ -148,7 +148,7 @@ void XALLOC_Free(void* ptr)
         // Deallocate the fixed memory block
         ALLOC_Free(pAllocator, pBlock);
     }
-} 
+}
 
 //----------------------------------------------------------------------------
 // XALLOC_Realloc
@@ -185,7 +185,7 @@ void* XALLOC_Realloc(XAllocData* self, void *ptr, size_t new_size)
 
     // Return the client pointer to the new memory block
     return pNewMem;
-} 
+}
 
 //----------------------------------------------------------------------------
 // XALLOC_Calloc
@@ -210,7 +210,7 @@ void* XALLOC_Calloc(XAllocData* self, size_t num, size_t size)
     }
 
     return pMem;
-} 
+}
 
 
 
