@@ -16,7 +16,7 @@
 #define _STATE_MACHINE_H
 
 #include "DataTypes.h"
-#include "Fault.h"
+#include "c_sm_fault.h"
 
 #ifdef __cplusplus
 extern "C" {

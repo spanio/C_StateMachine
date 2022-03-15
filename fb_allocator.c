@@ -1,6 +1,6 @@
 #include "fb_allocator.h"
 #include "DataTypes.h"
-#include "Fault.h"
+#include "c_sm_fault.h"
 #include <string.h>
 
 // Define USE_LOCK to use the default lock implementation

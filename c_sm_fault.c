@@ -1,4 +1,4 @@
-#include "Fault.h"
+#include "c_sm_fault.h"
 #include <assert.h>
 #if WIN32
 	#include "windows.h"
