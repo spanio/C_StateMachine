@@ -9,9 +9,10 @@
     #include "LockGuard.h"
     static LOCK_HANDLE _hLock;
 #else
-    #pragma message("WARNING: Define software lock.")
-    typedef int LOCK_HANDLE;
-    static LOCK_HANDLE _hLock;
+// Locks not requried as SM is not used in a multithreaded context
+// #pragma message("WARNING: Define software lock.")
+typedef int LOCK_HANDLE;
+static LOCK_HANDLE _hLock;
 
     #define LK_CREATE()     (1)
     #define LK_DESTROY(h)
