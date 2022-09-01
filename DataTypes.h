@@ -1,7 +1,7 @@
 #ifndef _DATA_TYPES_H
 #define _DATA_TYPES_H
 
-#if WIN32
+#ifdef WIN32
 	#include "windows.h"
 #else
 	typedef signed char INT8;
